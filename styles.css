@@ -598,6 +598,9 @@ header p {
         cursor: default;
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;
     }
     

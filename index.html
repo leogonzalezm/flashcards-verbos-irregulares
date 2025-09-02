@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <title>Flashcards - Verbos Irregulares en Inglés</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Verbos Irregulares en Inglés</h1>
+            <p>Aprende los verbos irregulares con flashcards interactivas</p>
+        </header>
+
+        <div class="stats-panel">
+            <div class="stat">
+                <span class="stat-value" id="total-verbs">0</span>
+                <span class="stat-label">Total Verbos</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="current-position">0</span>
+                <span class="stat-label">Posición Actual</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="learned-count">0</span>
+                <span class="stat-label">Aprendidos</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="accuracy">0%</span>
+                <span class="stat-label">Precisión</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="shuffle-btn" class="control-btn">🔀 Mezclar</button>
+            <button id="reset-btn" class="control-btn">🔄 Reiniciar</button>
+            <button id="filter-btn" class="control-btn">🔍 Filtrar</button>
+            <button id="mode-btn" class="control-btn">🎯 Modo Práctica</button>
+        </div>
+
+        <div class="flashcard-container">
+            <div class="flashcard" id="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <div class="verb-form">
+                            <h2 id="base-form">Verbo Base</h2>
+                            <p class="form-label">Forma Base</p>
+                        </div>
+                        <div class="hint">
+                            <small>Haz clic para ver las formas</small>
+                        </div>
+                    </div>
+                    <div class="flashcard-back">
+                        <div class="verb-forms">
+                            <div class="form-group">
+                                <h3 id="simple-past">Simple Past</h3>
+                                <p class="form-label">Pasado Simple</p>
+                            </div>
+                            <div class="form-group">
+                                <h3 id="past-participle">Past Participle</h3>
+                                <p class="form-label">Participio Pasado</p>
+                            </div>
+                        </div>
+                        <div class="verb-actions">
+                            <button id="know-btn" class="action-btn know">✅ Lo sé</button>
+                            <button id="dont-know-btn" class="action-btn dont-know">❌ No lo sé</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button id="prev-btn" class="nav-btn">⬅️ Anterior</button>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <button id="next-btn" class="nav-btn">Siguiente ➡️</button>
+        </div>
+
+        <div class="filter-modal" id="filter-modal">
+            <div class="modal-content">
+                <h3>Filtros de Estudio</h3>
+                <div class="filter-options">
+                    <label>
+                        <input type="radio" name="filter" value="all" checked>
+                        Todos los verbos
+                    </label>
+                    <label>
+                        <input type="radio" name="filter" value="unlearned">
+                        Solo no aprendidos
+                    </label>
+                    <label>
+                        <input type="radio" name="filter" value="learned">
+                        Solo aprendidos
+                    </label>
+                    <label>
+                        <input type="radio" name="filter" value="difficult">
+                        Marcados como difíciles
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button id="apply-filter" class="control-btn">Aplicar</button>
+                    <button id="close-modal" class="control-btn">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

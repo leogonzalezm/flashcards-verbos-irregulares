@@ -258,7 +258,12 @@ function resetProgress() {
 }
 
 // Marcar como conocido
-function markAsKnown() {
+function markAsKnown(e) {
+    if (e) {
+        e.stopPropagation(); // Prevenir que el evento se propague a la tarjeta
+        e.preventDefault();
+    }
+    
     const currentVerb = filteredVerbs[currentIndex];
     learnedVerbs.add(currentVerb.base);
     stats.correct++;
@@ -281,7 +286,12 @@ function markAsKnown() {
 }
 
 // Marcar como no conocido
-function markAsUnknown() {
+function markAsUnknown(e) {
+    if (e) {
+        e.stopPropagation(); // Prevenir que el evento se propague a la tarjeta
+        e.preventDefault();
+    }
+    
     const currentVerb = filteredVerbs[currentIndex];
     difficultVerbs.add(currentVerb.base);
     learnedVerbs.delete(currentVerb.base);
@@ -336,23 +346,49 @@ function togglePracticeMode() {
 }
 
 // Event Listeners
-flashcard.addEventListener('click', flipCard);
+flashcard.addEventListener('click', (e) => {
+    // Solo voltear si no se hizo clic en un botón
+    if (!e.target.closest('.action-btn')) {
+        flipCard();
+    }
+});
 
 // Soporte táctil mejorado para móviles
 let touchStartTime = 0;
+let touchStartTarget = null;
+
 flashcard.addEventListener('touchstart', (e) => {
     touchStartTime = Date.now();
+    touchStartTarget = e.target;
 }, { passive: true });
 
 flashcard.addEventListener('touchend', (e) => {
     const touchEndTime = Date.now();
     const touchDuration = touchEndTime - touchStartTime;
+    const touchEndTarget = e.target;
     
-    // Solo activar si es un toque rápido (no deslizamiento)
-    if (touchDuration < 300) {
+    // Solo activar si es un toque rápido (no deslizamiento) y no es en un botón
+    if (touchDuration < 300 && 
+        touchStartTarget === touchEndTarget && 
+        !e.target.closest('.action-btn')) {
         e.preventDefault();
         flipCard();
     }
+});
+
+// Agregar event listeners específicos para los botones de acción
+knowBtn.addEventListener('click', markAsKnown);
+knowBtn.addEventListener('touchend', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    markAsKnown(e);
+});
+
+dontKnowBtn.addEventListener('click', markAsUnknown);
+dontKnowBtn.addEventListener('touchend', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    markAsUnknown(e);
 });
 
 nextBtn.addEventListener('click', nextCard);
@@ -361,8 +397,6 @@ shuffleBtn.addEventListener('click', shuffleVerbs);
 resetBtn.addEventListener('click', resetProgress);
 filterBtn.addEventListener('click', () => filterModal.classList.add('active'));
 modeBtn.addEventListener('click', togglePracticeMode);
-knowBtn.addEventListener('click', markAsKnown);
-dontKnowBtn.addEventListener('click', markAsUnknown);
 applyFilterBtn.addEventListener('click', applyFilter);
 closeModalBtn.addEventListener('click', () => filterModal.classList.remove('active'));
 

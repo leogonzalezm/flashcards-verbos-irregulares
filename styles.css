@@ -189,6 +189,8 @@ header p {
     font-size: 1rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .action-btn.know {
